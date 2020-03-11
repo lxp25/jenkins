@@ -1,6 +1,6 @@
 #端口号
 server:
-  port: 8081
+  port: 8082
 #日志
 logging:
   level:
@@ -13,7 +13,7 @@ spring:
     cache: false
   datasource:
     username: root
-    password: 1234
+    password: 666
     url: jdbc:mysql://192.168.31.105:3306/maven_190204
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
