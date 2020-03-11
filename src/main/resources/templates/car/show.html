@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:insert="common/common.html"></div>
+</head>
+<body>
+<input type="button" th:value="新增" onclick="addCar()"/>
+<table id="table"></table>
+</body>
+<script type="text/javascript">
+    $("#table").bootstrapTable({
+        url:"/car/selectCar",
+        columns:[
+            {
+                checkbox:true,
+                visible:true
+            },
+            {field:"carId",title:"汽车编号"},
+            {field:"carName",title:"汽车名称"},
+            {field:"carPrice",title:"汽车价格"},
+            {field:"manuTime",title:"生产日期"},
+            {field:"expireTime",title:"过期日期"},
+            {field:"isLower",title:"是否下架",
+              formatter:function (value,row,index) {
+                  var str =""
+                  if(value==1){
+                      str+="是";
+                  }else if(value==2){
+                      str+="否";
+                  }
+                  return str;
+              }
+            },
+            {title:"操作",
+                formatter:function (value,row,index) {
+                    var str =""
+                    str+="<a href='javascript:updateCar("+row.carId+")'>修改</a>";
+                    str+="<a href='javascript:deletesCar("+row.carId+")'>删除</a>";
+                    return str;
+                }
+            },
+        ]
+    })
+    //修改
+    function updateCar(id){
+        BootstrapDialog.show({
+            title: '提示',
+            message: $('<div></div>').load('/car/updateById?id='+id),
+            closeable: true,
+            buttons: [{
+                label: '修改',
+                action: function (dialog) {
+                    $.ajax({
+                        url:"/car/updateCar",
+                        type:"post",
+                        data:$("#updateCarform").serialize(),
+                        success:function(data){
+                            toastr.success("修改成功")
+                            dialog.close();
+                            getData();
+                        },error:function(){
+                            toastr.error("修改失败")
+                        }
+                    })
+                }
+            }, {
+                label: '关闭',
+                action: function (dialog) {
+                    dialog.close();
+                }
+            }]
+        });
+    }
+    //删除
+    function deletesCar(id){
+        alert(id)
+        $.ajax({
+            url:"/car/deletesCar?",
+            type:"post",
+            data:{ids:id},
+            success:function(data){
+                toastr.success("删除成功")
+                getData();
+            },error:function(){
+                toastr.error("删除失败")
+            }
+        })
+    }
+    //新增
+    function addCar(){
+        BootstrapDialog.show({
+            title: '提示',
+            message: $('<div></div>').load('/car/tiaoadd'),
+            closeable: true,
+            buttons: [{
+                label: '新增',
+                action: function (dialog) {
+                    $.ajax({
+                        url:"/car/addCar",
+                        type:"post",
+                        data:$("#addCarform").serialize(),
+                        success:function(data){
+                            toastr.success("新增成功")
+                            dialog.close();
+                            getData();
+                        },error:function(){
+                            toastr.error("新增失败")
+                        }
+                    })
+                }
+            }, {
+                label: '关闭',
+                action: function (dialog) {
+                    dialog.close();
+                }
+            }]
+        });
+    }
+    //刷新
+    function getData(){
+        $("#table").bootstrapTable("refresh")
+    }
+</script>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:id="addCarform">
+    汽车名称:<input type="text" name="carName"/><br>
+    汽车价格:<input type="text" name="carPrice"/><br>
+    生产日期:<input type="date" name="manuTime"/><br>
+    过期日期:<input type="date" name="expireTime"/><br>
+    是否下架:
+            <input type="radio" name="isLower" th:value="1"/>是
+            <input type="radio" name="isLower" th:value="2"/>否
+</form>
+</body>
+</html>

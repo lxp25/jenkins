@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:id="updateCarform">
+    <input type="hidden" name="carId" th:value="${car.carId}"/>
+    汽车名称:<input type="text" name="carName" th:value="${car.carName}"/><br>
+    汽车价格:<input type="text" name="carPrice" th:value="${car.carPrice}"/><br>
+    生产日期:<input type="date" name="manuTime"   th:value="*{#dates.format(car.manuTime,'yyyy-MM-dd')}"/><br>
+    过期日期:<input type="date" name="expireTime" th:value="*{#dates.format(car.expireTime,'yyyy-MM-dd')}"/><br>
+    是否下架:
+            <input type="radio" th:checked="${car.isLower==1}" name="isLower" th:value="1"/>是
+            <input type="radio" th:checked="${car.isLower==2}" name="isLower" th:value="2"/>否
+</form>
+</body>
+</html>
